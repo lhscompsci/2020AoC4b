@@ -55,26 +55,45 @@ public class Main {
 
     }
 
-    public static boolean validate(Map<String, String> m){
+    public static boolean validate(Map<String, String> m) {
         int byr = Integer.parseInt(m.get("byr"));
         int iyr = Integer.parseInt(m.get("iyr"));
         int eyr = Integer.parseInt(m.get("eyr"));
         Set<String> ecl = new TreeSet<>(Arrays.asList(new String[]{"amb", "blu", "brn", "gry", "grn", "hzl", "oth"}));
         int pid = m.get("pid").length();
 
-        if(byr<1920 || byr>2002)
+        if (byr < 1920 || byr > 2002)
             return false;
 
-        if(iyr<2010 || iyr>2020)
+        if (iyr < 2010 || iyr > 2020)
             return false;
 
-        if (eyr<2020 || eyr>2030)
+        if (eyr < 2020 || eyr > 2030)
             return false;
 
-        if(!ecl.contains(m.get("ecl")))
+        if (!ecl.contains(m.get("ecl")))
             return false;
 
+        if (pid != 9 || !m.get("pid").matches("\\d"))
+            return false;
 
+        String hcl = m.get("hcl");
+        if (!hcl.matches("#[a-f0-9]{6}"))
+            return false;
+
+        String hgt = m.get("hgt");
+        String unit = hgt.substring(hgt.length() - 2);
+
+        if (!(unit.equals("cm") || unit.equals("im")))
+            return false
+        if (unit.equals("cm")) {
+            if (Integer.parseInt(hgt.substring(0, hgt.length() - 2) < 150 || Integer.parseInt(hgt.substring(0, hgt.length() - 2) > 193)
+            return false;
+        } else {
+            if (unit.equals("in"))
+                if (Integer.parseInt(hgt.substring(0, hgt.length() - 2) < 59 || Integer.parseInt(hgt.substring(0, hgt.length() - 2) > 76)
+            return false;
+        }
 
 
         return true;
